@@ -6,10 +6,24 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
+      allComplete: false,
       value: "",
       items: []
       }
       this.handleAddItem = this.handleAddItem.bind(this);
+      this.handleToggleAllComplete = this.handleToggleAllComplete.bind(this);
+    }
+    handleToggleAllComplete() {
+      const complete = !this.state.allComplete;
+      const newItems = this.state.items.map((item) =>({
+        ...item,
+        complete
+      }))
+      console.table(newItems);
+      this.setState({
+        items: newItems,
+        allComplete: complete
+       })
     }
     handleAddItem() {
       if(!this.state.value) return
@@ -33,7 +47,9 @@ export default class App extends React.Component {
         <Header 
         value={this.state.container}
         onAddItem={this.handleAddItem}
-        onChange={(value) => this.setState({ value })}/>
+        onChange={(value) => this.setState({ value })}
+        onToggleAllComplete={this.handleToggleAllComplete} 
+        />
         <View style={styles.content } >
             
         </View>
