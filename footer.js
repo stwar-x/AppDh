@@ -1,0 +1,11 @@
+import React from 'react';
+import { View } from 'react-native';
+
+export default class Footer extends React.Component {
+render() {
+    return (
+    <View>
+    </View>
+    );
+}
+}
