@@ -12,7 +12,7 @@ render() {
         value={this.props.value}
         onChangeText = {this.props.onChange}
         onSubmitEditing={this.props.onAddItem}
-        placeholde= "What needs to be done?"
+        placeholder= "What needs to be done?"
         blurOnSubmit= {false}
         returnKeyType= "done"
         style={styles.input}
