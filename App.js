@@ -33,7 +33,7 @@ export default class App extends React.Component {
     
     }
     handleAddItem() {
-      if(!this.state.value) return
+      if(!this.state.value) return;
       const newItems = [
         ...this.state.items,
         {
@@ -49,7 +49,7 @@ export default class App extends React.Component {
     return (
     <View style={styles.container}>
         <Header 
-        value={this.state.container}
+        value={this.state.value}
         onAddItem={this.handleAddItem}
         onChange={(value) => this.setState({ value })}
         onToggleAllComplete={this.handleToggleAllComplete} 
@@ -82,7 +82,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: "orange",
+      backgroundColor: "gray",
       paddingTop: 50
     },
     content: {
