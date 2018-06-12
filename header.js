@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-
 export default class Header extends React.Component {
 render() {
     return (
@@ -23,7 +22,7 @@ render() {
 }
 const styles = StyleSheet.create({
     header: {
-      //paddingHorizontal: 16,
+      paddingHorizontal: 16,
       flexDirection: "row",
       justifyContent: "space-around",
       alignItems: "center",
