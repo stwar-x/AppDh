@@ -1,27 +1,101 @@
 import React from 'react';
-import { View, StyleSheet, ListView, Keyboard } from 'react-native';
+import { View, StyleSheet,ActivityIndicator, ListView, Keyboard, AsyncStorage } from 'react-native';
 import Header from "./header";
 import Footer from "./footer";
 import Row from "./row";
+
+const filterItems = (filter, items) => {
+  return items.filter((item) =>{
+    if (filter === "ALL") return true;
+    if (filter === "COMPLETED") return item.complete;
+    if (filter === "ACTIVE") return !item.complete;
+  })
+}
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2)=> r1 !== r2});
-    this.state ={
+    this.state = {
+      loading: true,
       allComplete: false,
+      filter: "ALL",
       value: "",
       items: [],
       dataSource: ds.cloneWithRows([])
       }
+      this.handleUpDateText = this.handleUpDateText.bind(this);
+      this.handleToggleEditing = this.handleToggleComplete.bind(this);
+      this. handleFilter = this. handleFilter.bind(this);
+      this.handleRemoveItem = this.handleRemoveItem.bind(this);
+      this.handleToggleComplete = this.handleToggleComplete.bind(this);
       this.setSource = this.setSource.bind(this);
       this.handleAddItem = this.handleAddItem.bind(this);
       this.handleToggleAllComplete = this.handleToggleAllComplete.bind(this);
+      this.handleClearComplete = this.handleClearComplete.bind(this);
+    }
+    componentWillMount(){
+      AsyncStorage.getItem("items").then((json) => {
+        try {
+          const items = JSON.parse(json);
+          this.setSource(items, items, { loading: flase});
+        } catch(e) {
+          this.setState({
+            loading: false
+          })
+        }
+      })
+    }
+    handleUpDateText(key, Text) {
+      const newItems = this.state.items.map((item) => {
+        if (item.key !== key) return item;
+        return {
+          ...item,
+          text
+        }
+      })
+      this.setSource(newItems, filterItems(this.state.filter, newItems));
+    }
+    handleToggleEditing(key, editing) {
+      const newItems = this.state.items.map((item) => {
+        if (item.key !== key) return item;
+        return {
+          ...item,
+          editing
+        }
+      })
+      this.setSource(newItems, filterItems(this.state.filter, newItems));
     }
     setSource(items, itemsDatasource, otherState = {}) {
         this.setState({
-          items, dataSource: this.state.dataSource.cloneWithRows(itemsDatasource),
+          items,
+          dataSource: this.state.dataSource.cloneWithRows(itemsDatasource),
           ...otherState
         })
+        AsyncStorage.setItem("items", JSON.stringify(items));
+    }
+    handleClearComplete(){
+      const newItems = filterItems("ACTIVE", this.state.items);
+      this.setSource(newItems, filterItems(this.setState.filter, newItems));
+    }
+    handleFilter(filter) {
+      this.setSource(this.state.items, filterItems(filter, this.state.items), {filter})
+    }
+    handleRemoveItem(key) {
+      const newItems = this.state.items.filter((item) =>{
+        return item.key !== key
+      })
+      this.setSource(newItems, filterItems(this.state.filter, newItems));
+    }
+    handleToggleComplete(key, complete) {
+      const newItems = this.state.items.map((item) => {
+        if (item.key !== key) return item;
+        return {
+          ...item,
+          complete
+        }
+
+      })
+      this.setSource(newItems, filterItems(this.state.filter, newItems));
     }
     handleToggleAllComplete() {
       const complete = !this.state.allComplete;
@@ -29,11 +103,10 @@ export default class App extends React.Component {
         ...item,
         complete
       }))
-      this.setSource(newItems, newItems, { allComplete: complete})
-    
+      this.setSource(newItems, filterItems(this.state.filter, newItems))  
     }
     handleAddItem() {
-      if(!this.state.value) return;
+      if (!this.state.value) return;
       const newItems = [
         ...this.state.items,
         {
@@ -42,17 +115,16 @@ export default class App extends React.Component {
           complete: false
         }
       ]
-      this.setSource(newItems, newItems, { value: " "} )
-    }
-  
+      this.setSource(newItems, filterItems(this.state.filter, newItems), { value: ""})
+      }
   render() {
     return (
-    <View style={styles.container}>
+     <View style={styles.container}>
         <Header 
-        value={this.state.value}
-        onAddItem={this.handleAddItem}
-        onChange={(value) => this.setState({ value })}
-        onToggleAllComplete={this.handleToggleAllComplete} 
+          value={this.state.value}
+          onAddItem={this.handleAddItem}
+          onChange={(value) => this.setState({ value })}
+          onToggleAllComplete={this.handleToggleAllComplete} 
         />
         <View style={styles.content } >
             <ListView
@@ -64,6 +136,10 @@ export default class App extends React.Component {
               return (
                 <Row
                   key={key}
+                  onUpdate={(text) => this.handleUpdateText(key, text)}
+                  onToggleEdit={(editing) => this.handleToggleEditing(key, editing)}
+                  onRemove={() => this.handleRemoveItem(key)}
+                  onComplete={(complete) => this.handleToggleComplete(key, complete)}
                   { ...value}
                   />
               )
@@ -73,7 +149,18 @@ export default class App extends React.Component {
             }}
             />
         </View>
-        <Footer />
+        <Footer 
+          count={filterItems("ACTIVE", this.state.items).length}
+          onFilter={this.handleFilter}
+          filter={this.state.filter}
+          onClearComplete={this.handleClearComplete}
+         />
+         {this.state.loading && <View style={styles.loading}>
+           <ActivityIndicator
+             animating
+             size="large"
+           />
+         </View>}
     </View>
     );
   }
@@ -84,6 +171,16 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: "gray",
       paddingTop: 50
+   },
+  loading: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,.2)"
     },
     content: {
       flex: 1

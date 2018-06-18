@@ -15,7 +15,7 @@ render() {
         blurOnSubmit= {false}
         returnKeyType= "done"
         style={styles.input}
-      />   
+      />    
     </View>
     );
   }
@@ -39,3 +39,6 @@ const styles = StyleSheet.create({
       height: 70
     }
 })
+
+
+
