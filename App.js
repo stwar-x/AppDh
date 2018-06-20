@@ -5,7 +5,7 @@ import Footer from "./footer";
 import Row from "./row";
 
 const filterItems = (filter, items) => {
-  return items.filter((item) =>{
+  return items.filter((item) => {
     if (filter === "ALL") return true;
     if (filter === "COMPLETED") return item.complete;
     if (filter === "ACTIVE") return !item.complete;
@@ -37,7 +37,7 @@ export default class App extends React.Component {
       AsyncStorage.getItem("items").then((json) => {
         try {
           const items = JSON.parse(json);
-          this.setSource(items, items, { loading: flase});
+          this.setSource(items, items, { loading: false});
         } catch(e) {
           this.setState({
             loading: false
@@ -66,16 +66,16 @@ export default class App extends React.Component {
       this.setSource(newItems, filterItems(this.state.filter, newItems));
     }
     setSource(items, itemsDatasource, otherState = {}) {
-        this.setState({
-          items,
-          dataSource: this.state.dataSource.cloneWithRows(itemsDatasource),
-          ...otherState
-        })
-        AsyncStorage.setItem("items", JSON.stringify(items));
+      this.setState({
+        items,
+        dataSource: this.state.dataSource.cloneWithRows(itemsDatasource),
+        ...otherState
+      })
+      AsyncStorage.setItem("items", JSON.stringify(items));
     }
-    handleClearComplete(){
+    handleClearComplete() {
       const newItems = filterItems("ACTIVE", this.state.items);
-      this.setSource(newItems, filterItems(this.setState.filter, newItems));
+      this.setSource(newItems, filterItems(this.state.filter, newItems));
     }
     handleFilter(filter) {
       this.setSource(this.state.items, filterItems(filter, this.state.items), {filter})
@@ -93,7 +93,6 @@ export default class App extends React.Component {
           ...item,
           complete
         }
-
       })
       this.setSource(newItems, filterItems(this.state.filter, newItems));
     }
@@ -103,7 +102,7 @@ export default class App extends React.Component {
         ...item,
         complete
       }))
-      this.setSource(newItems, filterItems(this.state.filter, newItems))  
+      this.setSource(newItems, filterItems(this.state.filter, newItems), {allComplete: complete})  
     }
     handleAddItem() {
       if (!this.state.value) return;
@@ -167,11 +166,11 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "gray",
-      paddingTop: 50
-   },
+  container: {
+    flex: 1,
+    backgroundColor: "gray",
+    paddingTop: 25
+  },
   loading: {
     position: "absolute",
     left: 0,
