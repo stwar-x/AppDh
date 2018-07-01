@@ -11,6 +11,28 @@ const filterItems = (filter, items) => {
     if (filter === "ACTIVE") return !item.complete;
   })
 }
+
+const datos = [
+  {
+    key: 1,
+    text: 'instalar las carpas',
+    complete: false,
+    time: '7 am'
+  },
+  {
+    key: 2,
+    text: 'instalar el sonido',
+    complete: false,
+    time: '7:30 am'
+  },
+  {
+    key: 3,
+    text: 'instalar las cintas',
+    complete: false,
+    time: '8 am'
+  }
+]
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -34,16 +56,7 @@ export default class App extends React.Component {
       this.handleClearComplete = this.handleClearComplete.bind(this);
     }
     componentWillMount(){
-      AsyncStorage.getItem("items").then((json) => {
-        try {
-          const items = JSON.parse(json);
-          this.setSource(items, items, { loading: false});
-        } catch(e) {
-          this.setState({
-            loading: false
-          })
-        }
-      })
+      this.setSource(datos, datos, { loading: false});
     }
     handleUpDateText(key, Text) {
       const newItems = this.state.items.map((item) => {
@@ -118,7 +131,7 @@ export default class App extends React.Component {
       }
   render() {
     return (
-     <View style={styles.container}>
+      <View style={styles.container}>
         <Header 
           value={this.state.value}
           onAddItem={this.handleAddItem}
@@ -126,7 +139,7 @@ export default class App extends React.Component {
           onToggleAllComplete={this.handleToggleAllComplete} 
         />
         <View style={styles.content } >
-            <ListView
+          <ListView
             style={styles.list}
             enableEmptySections
             dataSource={this.state.dataSource}
@@ -140,27 +153,29 @@ export default class App extends React.Component {
                   onRemove={() => this.handleRemoveItem(key)}
                   onComplete={(complete) => this.handleToggleComplete(key, complete)}
                   { ...value}
-                  />
+                />
               )
             }}
             renderSeparator={(sectionId, rowId) => {
               return <View key={rowId} style={styles.separator} />
             }}
-            />
+          />
         </View>
         <Footer 
           count={filterItems("ACTIVE", this.state.items).length}
           onFilter={this.handleFilter}
           filter={this.state.filter}
           onClearComplete={this.handleClearComplete}
-         />
-         {this.state.loading && <View style={styles.loading}>
-           <ActivityIndicator
-             animating
-             size="large"
-           />
-         </View>}
-    </View>
+        />
+        {this.state.loading && 
+          <View style={styles.loading}>
+            <ActivityIndicator
+              animating
+              size="large"
+            />
+          </View>
+        }
+      </View>
     );
   }
 }

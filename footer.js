@@ -5,23 +5,24 @@ import {View, Text, StyleSheet, TouchableOpacity } from "react-native"
 class Footer extends Component {
   render() {
     const { filter } = this.props;
+    // console.warn("OOOOOOOOOOO");
     return (
       <View style={styles.container}>
         <Text>{this.props.count} count</Text>
         <View style={styles.filters}>
-         <TouchableOpacity style={[styles.filter, filter === "ALL" && styles.selected]} onPress={() => this.props.onFilter("ALL")}>
-           <Text>All</Text>
+          <TouchableOpacity style={[styles.filter, filter === "ALL" && styles.selected]} onPress={() => this.props.onFilter("ALL")}>
+            <Text>All</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.filter, filter === "ACTIVE" && styles.selected]} onPress={() => this.props.onFilter("ACTIVE")}>
+            <Text>Active</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.filter, filter === "COMPLETED" && styles.selected]} onPress={() => this.props.onFilter("COMPLETED")}>
+            <Text>Complete</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity onPress={this.props.onClearComplete}>
+          <Text>Clear Completed</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.filter, filter === "ACTIVE" && styles.selected]} onPress={() => this.props.onFilter("ACTIVE")}>
-           <Text>Active</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.filter, filter === "COMPLETED" && styles.selected]} onPress={() => this.props.onFilter("COMPLETED")}>
-          <Text>Complete</Text>
-       </TouchableOpacity>
-       </View>
-       <TouchableOpacity onPress={this.props.onClearComplete}>
-         <Text>Clear Completed</Text>
-       </TouchableOpacity>
       </View>
      );
    }
@@ -31,7 +32,8 @@ const styles = StyleSheet.create({
     padding: 16,
     flexDirection:"row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    backgroundColor: "#eae8e8d9",
   },
   filters: {
     flexDirection: "row"
@@ -43,8 +45,9 @@ const styles = StyleSheet.create({
     borderColor: "transparent"
   },
   selected: {
-    borderColor: "rgba(175, 47, 47, .2)"
-  
+    padding: 2,
+    backgroundColor: "#f1e794d9",
+    borderRadius: 2
   }
 })
 export default Footer;
