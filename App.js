@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, StyleSheet,ActivityIndicator, ListView, Keyboard, AsyncStorage } from 'react-native';
+import { View, StyleSheet,ActivityIndicator, ListView, Keyboard, AsyncStorage, Picker } from 'react-native';
 import Header from "./header";
 import Footer from "./footer";
 import Row from "./row";
+import moment from 'moment';
 
 const filterItems = (filter, items) => {
   return items.filter((item) => {
@@ -12,24 +13,55 @@ const filterItems = (filter, items) => {
   })
 }
 
+const now = moment(new Date()).startOf('day');
 const datos = [
   {
+    key: 0,
+    date: moment("2018-07-06"),
+    events: [
+      {
+        key: 1,
+        text: 'instalar las carpas',
+        complete: false,
+        time: moment("2018-07-10 07:00")
+      },
+      {
+        key: 2,
+        text: 'instalar el sonido',
+        complete: false,
+        time: moment("2018-07-10 07:30")
+      },
+      {
+        key: 3,
+        text: 'instalar las cintas',
+        complete: false,
+        time: moment("2018-07-10 08:00")
+      }
+    ]
+  },
+  {
     key: 1,
-    text: 'instalar las carpas',
-    complete: false,
-    time: '7 am'
-  },
-  {
-    key: 2,
-    text: 'instalar el sonido',
-    complete: false,
-    time: '7:30 am'
-  },
-  {
-    key: 3,
-    text: 'instalar las cintas',
-    complete: false,
-    time: '8 am'
+    date: moment("2018-07-20"),
+    events: [
+      {
+        key: 1,
+        text: 'next day instalar las carpas',
+        complete: false,
+        time: moment("2018-07-10 07:00")
+      },
+      {
+        key: 2,
+        text: 'next day instalar el sonido',
+        complete: false,
+        time: moment("2018-07-10 07:30")
+      },
+      {
+        key: 3,
+        text: 'next day instalar las cintas',
+        complete: false,
+        time: moment("2018-07-10 08:00")
+      }
+    ]
   }
 ]
 
@@ -43,102 +75,125 @@ export default class App extends React.Component {
       filter: "ALL",
       value: "",
       items: [],
-      dataSource: ds.cloneWithRows([])
+      dataSource: ds.cloneWithRows([]),
+      day: 0
+    }
+    this.handleUpDateText = this.handleUpDateText.bind(this);
+    this.handleToggleEditing = this.handleToggleComplete.bind(this);
+    this. handleFilter = this. handleFilter.bind(this);
+    this.handleRemoveItem = this.handleRemoveItem.bind(this);
+    this.handleToggleComplete = this.handleToggleComplete.bind(this);
+    this.setSource = this.setSource.bind(this);
+    this.handleAddItem = this.handleAddItem.bind(this);
+    this.handleToggleAllComplete = this.handleToggleAllComplete.bind(this);
+    this.handleClearComplete = this.handleClearComplete.bind(this);
+    this.renderDay = this.renderDay.bind(this);
+  }
+  componentWillMount(){
+    this.setSource(datos[this.state.day].events, datos[this.state.day].events, { loading: false });
+  }
+  handleUpDateText(key, Text) {
+    const newItems = this.state.items.map((item) => {
+      if (item.key !== key) return item;
+      return {
+        ...item,
+        text
       }
-      this.handleUpDateText = this.handleUpDateText.bind(this);
-      this.handleToggleEditing = this.handleToggleComplete.bind(this);
-      this. handleFilter = this. handleFilter.bind(this);
-      this.handleRemoveItem = this.handleRemoveItem.bind(this);
-      this.handleToggleComplete = this.handleToggleComplete.bind(this);
-      this.setSource = this.setSource.bind(this);
-      this.handleAddItem = this.handleAddItem.bind(this);
-      this.handleToggleAllComplete = this.handleToggleAllComplete.bind(this);
-      this.handleClearComplete = this.handleClearComplete.bind(this);
-    }
-    componentWillMount(){
-      this.setSource(datos, datos, { loading: false});
-    }
-    handleUpDateText(key, Text) {
-      const newItems = this.state.items.map((item) => {
-        if (item.key !== key) return item;
-        return {
-          ...item,
-          text
-        }
-      })
-      this.setSource(newItems, filterItems(this.state.filter, newItems));
-    }
-    handleToggleEditing(key, editing) {
-      const newItems = this.state.items.map((item) => {
-        if (item.key !== key) return item;
-        return {
-          ...item,
-          editing
-        }
-      })
-      this.setSource(newItems, filterItems(this.state.filter, newItems));
-    }
-    setSource(items, itemsDatasource, otherState = {}) {
-      this.setState({
-        items,
-        dataSource: this.state.dataSource.cloneWithRows(itemsDatasource),
-        ...otherState
-      })
-      AsyncStorage.setItem("items", JSON.stringify(items));
-    }
-    handleClearComplete() {
-      const newItems = filterItems("ACTIVE", this.state.items);
-      this.setSource(newItems, filterItems(this.state.filter, newItems));
-    }
-    handleFilter(filter) {
-      this.setSource(this.state.items, filterItems(filter, this.state.items), {filter})
-    }
-    handleRemoveItem(key) {
-      const newItems = this.state.items.filter((item) =>{
-        return item.key !== key
-      })
-      this.setSource(newItems, filterItems(this.state.filter, newItems));
-    }
-    handleToggleComplete(key, complete) {
-      const newItems = this.state.items.map((item) => {
-        if (item.key !== key) return item;
-        return {
-          ...item,
-          complete
-        }
-      })
-      this.setSource(newItems, filterItems(this.state.filter, newItems));
-    }
-    handleToggleAllComplete() {
-      const complete = !this.state.allComplete;
-      const newItems = this.state.items.map((item) =>({
+    })
+    this.setSource(newItems, filterItems(this.state.filter, newItems));
+  }
+  handleToggleEditing(key, editing) {
+    const newItems = this.state.items.map((item) => {
+      if (item.key !== key) return item;
+      return {
+        ...item,
+        editing
+      }
+    })
+    this.setSource(newItems, filterItems(this.state.filter, newItems));
+  }
+  setSource(items, itemsDatasource, otherState = {}) {
+    this.setState({
+      items,
+      dataSource: this.state.dataSource.cloneWithRows(itemsDatasource),
+      ...otherState
+    })
+    AsyncStorage.setItem("items", JSON.stringify(items));
+  }
+  handleClearComplete() {
+    const newItems = filterItems("ACTIVE", this.state.items);
+    this.setSource(newItems, filterItems(this.state.filter, newItems));
+  }
+  handleFilter(filter) {
+    this.setSource(this.state.items, filterItems(filter, this.state.items), {filter})
+  }
+  handleRemoveItem(key) {
+    const newItems = this.state.items.filter((item) =>{
+      return item.key !== key
+    })
+    this.setSource(newItems, filterItems(this.state.filter, newItems));
+  }
+  handleToggleComplete(key, complete) {
+    const newItems = this.state.items.map((item) => {
+      if (item.key !== key) return item;
+      return {
         ...item,
         complete
-      }))
-      this.setSource(newItems, filterItems(this.state.filter, newItems), {allComplete: complete})  
-    }
-    handleAddItem() {
-      if (!this.state.value) return;
-      const newItems = [
-        ...this.state.items,
-        {
-          key: Date.now(),
-          text: this.state.value,
-          complete: false
-        }
-      ]
-      this.setSource(newItems, filterItems(this.state.filter, newItems), { value: ""})
       }
+    })
+    this.setSource(newItems, filterItems(this.state.filter, newItems));
+  }
+  handleToggleAllComplete() {
+    const complete = !this.state.allComplete;
+    const newItems = this.state.items.map((item) =>({
+      ...item,
+      complete
+    }))
+    this.setSource(newItems, filterItems(this.state.filter, newItems), {allComplete: complete})  
+  }
+  handleAddItem() {
+    if (!this.state.value) return;
+    const newItems = [
+      ...this.state.items,
+      {
+        key: Date.now(),
+        text: this.state.value,
+        complete: false
+      }
+    ]
+    this.setSource(newItems, filterItems(this.state.filter, newItems), { value: ""})
+  }
+  renderDay(option) {
+    return (
+      <Picker.Item key={option.key} label={option.date.format('DD-MM-YYYY')} value={option.key} />
+    );
+  }
   render() {
+    const notToday = now.diff(datos[this.state.day].date.startOf('day'), 'days') !== 0;
     return (
       <View style={styles.container}>
         <Header 
           value={this.state.value}
           onAddItem={this.handleAddItem}
           onChange={(value) => this.setState({ value })}
-          onToggleAllComplete={this.handleToggleAllComplete} 
+          onToggleAllComplete={this.handleToggleAllComplete}
+          notToday={notToday}
         />
-        <View style={styles.content } >
+        <Picker
+          selectedValue={this.state.day}
+          style={styles.picker}
+          onValueChange={itemValue => {
+            this.setSource(datos[itemValue].events, datos[itemValue].events, { day: itemValue });
+          }}
+        >
+          {datos.map(d => {
+            return this.renderDay(d);
+          })}
+        </Picker>
+        <View style={styles.content}>
+          {notToday &&
+            <View style={styles.notToday} />
+          }
           <ListView
             style={styles.list}
             enableEmptySections
@@ -166,6 +221,7 @@ export default class App extends React.Component {
           onFilter={this.handleFilter}
           filter={this.state.filter}
           onClearComplete={this.handleClearComplete}
+          notToday={notToday}
         />
         {this.state.loading && 
           <View style={styles.loading}>
@@ -195,15 +251,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "rgba(0,0,0,.2)"
-    },
-    content: {
-      flex: 1
-    },
-    list: {
-      backgroundColor: "#FFF"
-    },
-    separator: {
-        borderWidth: 1,
-        borderColor: "#F5F5F5"
-    }
+  },
+  content: {
+    flex: 1
+  },
+  list: {
+    backgroundColor: "#FFF"
+  },
+  separator: {
+      borderWidth: 1,
+      borderColor: "#F5F5F5"
+  },
+  picker: {
+    height: 50,
+    alignSelf: 'stretch'
+  },
+  notToday: {
+    flex: 1,
+    alignSelf: 'stretch',
+    backgroundColor: "#f4f7fe",
+    opacity: 0.5,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    zIndex: 5
+  }
 })

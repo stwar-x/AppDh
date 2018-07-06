@@ -5,9 +5,11 @@ import {View, Text, StyleSheet, TouchableOpacity } from "react-native"
 class Footer extends Component {
   render() {
     const { filter } = this.props;
-    // console.warn("OOOOOOOOOOO");
     return (
       <View style={styles.container}>
+        {this.props.notToday &&
+          <View style={styles.notToday} />
+        }
         <Text>{this.props.count} count</Text>
         <View style={styles.filters}>
           <TouchableOpacity style={[styles.filter, filter === "ALL" && styles.selected]} onPress={() => this.props.onFilter("ALL")}>
@@ -48,6 +50,18 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: "#f1e794d9",
     borderRadius: 2
+  },
+  notToday: {
+    flex: 1,
+    alignSelf: 'stretch',
+    backgroundColor: "#f4f7fe",
+    opacity: 0.5,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    zIndex: 5
   }
 })
 export default Footer;

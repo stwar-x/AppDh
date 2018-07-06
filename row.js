@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Switch, TouchableOpacity, TextInput } from 'react-native';
+import moment from 'moment';
 
 export default class row extends React.Component {
   render() {
@@ -7,7 +8,8 @@ export default class row extends React.Component {
 
     const textComponent = (
       <TouchableOpacity style={styles.textWrap} onLongPress={() => this.props.onToggleEdit(true)}>
-        <Text style={[styles.text, complete && styles.complete]}>{this.props.text} {this.props.time}</Text>
+        <Text style={[styles.text, complete && styles.complete]}>{this.props.text}</Text>
+        <Text style={styles.time}>{this.props.time.format('hh:mm a')}</Text>
       </TouchableOpacity>
     )
 
@@ -51,8 +53,11 @@ const styles = StyleSheet.create({
     container: {
         padding: 10,
         flexDirection: "row",
-        alignItems: "flex-start",
+        alignItems: "center",
         justifyContent: "space-between"
+    },
+    time: {
+      fontSize: 12
     },
     input: {
       height: 100,
