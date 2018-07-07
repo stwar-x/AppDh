@@ -4,6 +4,9 @@ export default class Header extends React.Component {
 render() {
     return (
     <View style={styles.header}>
+      {this.props.notToday &&
+        <View style={styles.notToday} />
+      }
       <TouchableOpacity onPress={this.props.onToggleAllComplete}>
         <Text style={styles.toggleIcon}>{String.fromCharCode(10003)}</Text>
       </TouchableOpacity>
@@ -16,7 +19,7 @@ render() {
           blurOnSubmit= {false}
           returnKeyType= "done"
           style={styles.input}
-          autoFocus={true}
+          autoFocus={!this.props.notToday}
           underlineColorAndroid="transparent"
         />    
       </View>
@@ -43,5 +46,17 @@ const styles = StyleSheet.create({
     height: 70,
     paddingBottom: 5,
     borderWidth: 0
+  },
+  notToday: {
+    flex: 1,
+    alignSelf: 'stretch',
+    backgroundColor: "#f4f7fe",
+    opacity: 0.5,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    zIndex: 5
   }
 })
