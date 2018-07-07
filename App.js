@@ -101,9 +101,6 @@ export default class App extends React.Component {
     this.changeDays = this.changeDays.bind(this);
   }
   async componentWillMount() {
-    // this.setSource(datos[this.state.day].events, datos[this.state.day].events, {
-    //   loading: false,
-    // });
     for(let i = 0; i < datos.length; i++){
       if (datos[i].date.diff(now, 'days') >= 0) {
         let json = await AsyncStorage.getItem(datos[i].date.format('DD-MM-YYYY') + 'items')
@@ -133,17 +130,6 @@ export default class App extends React.Component {
       });
     }
   }
-  // shouldComponentUpdate() {
-  //   console.log('update')
-  //     AsyncStorage.getItem(moment().format('DD-MM-YYYY') + 'items').then(json => {
-  //         try {
-  //           const items = JSON.parse(json);
-  //           console.log('update items', items);
-  //         } catch (e) {
-  //           console.log('error', e.message);
-  //         }
-  //     })
-  // }
 
   handleUpDateText(key, text) {
     const newItems = this.state.items.map(item => {
