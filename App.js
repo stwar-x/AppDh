@@ -32,18 +32,21 @@ const datos = [
         text: '1 instalar las carpas',
         complete: false,
         time: moment('2018-07-07 07:00'),
+        speach: 'Oe Pirobo'
       },
       {
         key: 2,
         text: '2 instalar el sonido',
         complete: false,
         time: moment('2018-07-07 07:30'),
+        speach: 'Gonorrea ome gonorrea ome'
       },
       {
         key: 3,
         text: '3 instalar las cintas',
         complete: false,
         time: moment('2018-07-07 13:00'),
+        speach: 'Ya termino?'
       },
     ],
   },
@@ -56,18 +59,21 @@ const datos = [
         text: 'next day instalar las carpas',
         complete: false,
         time: moment('2018-12-20 07:00'),
+        speach: 'Oe Pirobo'
       },
       {
         key: 2,
         text: 'next day instalar el sonido',
         complete: false,
         time: moment('2018-12-20 07:30'),
+        speach: 'Gonorrea ome gonorrea ome'
       },
       {
         key: 3,
         text: 'next day instalar las cintas',
         complete: false,
         time: moment('2018-12-20 08:00'),
+        speach: 'Ya termino?'
       },
     ],
   },
@@ -101,6 +107,18 @@ export default class App extends React.Component {
     this.changeDays = this.changeDays.bind(this);
   }
   async componentWillMount() {
+    this.alertIfRemoteNotificationsDisabledAsync();
+    // await Expo.Notifications.scheduleLocalNotificationAsync({
+    //   title: 'title',
+    //   body: 'body',
+    //   android: {
+    //     icon: 'http://static.wixstatic.com/media/2e5bc5_5f3d634ff4eb43c1998cf0b767f6a5b9~mv2.png/v1/fill/w_1024,h_1024,al_c,usm_0.66_1.00_0.01/2e5bc5_5f3d634ff4eb43c1998cf0b767f6a5b9~mv2.png'
+    //   }
+    // }, {
+    //   time: parseInt(moment().add(3, 'seconds').format('x')),
+    //   repeat: 'minute'
+    // });
+
     for(let i = 0; i < datos.length; i++){
       if (datos[i].date.diff(now, 'days') >= 0) {
         let json = await AsyncStorage.getItem(datos[i].date.format('DD-MM-YYYY') + 'items')
@@ -122,12 +140,19 @@ export default class App extends React.Component {
     let json = await AsyncStorage.getItem(datos[this.state.day].date.format('DD-MM-YYYY') + 'items');
     try {
       const items = JSON.parse(json);
-      console.log('itemsitemsitems', items);
       this.setSource(items, items, { loading: false });
     } catch (e) {
       this.setState({
         loading: false,
       });
+    }
+  }
+
+  async alertIfRemoteNotificationsDisabledAsync() {
+    const { Permissions } = Expo;
+    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    if (status !== 'granted') {
+      alert('Hey! You might want to enable notifications for my app, they are good.');
     }
   }
 
@@ -221,7 +246,6 @@ export default class App extends React.Component {
     );
   }
   async changeDays(itemValue) {
-    console.log('itemValue',itemValue,'fecha',datos[itemValue].date.format('DD-MM-YYYY') + 'items');
     let json = await AsyncStorage.getItem(datos[itemValue].date.format('DD-MM-YYYY') + 'items');
     try {
       const items = JSON.parse(json);

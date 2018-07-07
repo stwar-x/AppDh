@@ -3,6 +3,7 @@
     "sdkVersion": "27.0.0",
     "android": {
       "package": "com.care.chimba"
-    }
+    },
+    "icon": "http://static.wixstatic.com/media/2e5bc5_5f3d634ff4eb43c1998cf0b767f6a5b9~mv2.png/v1/fill/w_1024,h_1024,al_c,usm_0.66_1.00_0.01/2e5bc5_5f3d634ff4eb43c1998cf0b767f6a5b9~mv2.png"
   }
 }
