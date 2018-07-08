@@ -22,6 +22,7 @@ const filterItems = (filter, items) => {
 };
 
 const now = moment(new Date()).startOf('day');
+const rigthNow = moment(`${moment().format('YYYY-MM-DD')} ${moment().format('HH:mm')}`);
 const datos = [
   {
     key: 0,
@@ -282,26 +283,32 @@ export default class App extends React.Component {
   }
   async componentWillMount() {
     this.alertIfRemoteNotificationsDisabledAsync();
-    // await Expo.Notifications.scheduleLocalNotificationAsync({
-    //   title: 'title',
-    //   body: 'body',
-    //   android: {
-    //     icon: 'http://static.wixstatic.com/media/2e5bc5_5f3d634ff4eb43c1998cf0b767f6a5b9~mv2.png/v1/fill/w_1024,h_1024,al_c,usm_0.66_1.00_0.01/2e5bc5_5f3d634ff4eb43c1998cf0b767f6a5b9~mv2.png'
-    //   }
-    // }, {
-    //   time: parseInt(moment().add(3, 'seconds').format('x')),
-    //   repeat: 'minute'
-    // });
 
     for(let i = 0; i < datos.length; i++){
       if (datos[i].date.diff(now, 'days') >= 0) {
-        let json = await AsyncStorage.getItem(datos[i].date.format('DD-MM-YYYY') + 'items')
         try {
-          const items = JSON.parse(json);
-
+          let json = await AsyncStorage.getItem(datos[i].date.format('DD-MM-YYYY') + 'items')
+          let items = JSON.parse(json);
           if (items === null) {
-            await AsyncStorage.setItem(datos[i].date.format('DD-MM-YYYY') + 'items', JSON.stringify(datos[i].events)
-            );
+            await AsyncStorage.setItem(datos[i].date.format('DD-MM-YYYY') + 'items', JSON.stringify(datos[i].events));
+          }
+          items = datos[i].events;
+          for (let j = 0; j < items.length; j++) {
+            if (moment(items[j].time).diff(rigthNow) > 0) {
+              await Expo.Notifications.scheduleLocalNotificationAsync({
+                title: items[j].text,
+                body: items[j].speach,
+                android: {
+                  icon: 'http://static.wixstatic.com/media/2e5bc5_5f3d634ff4eb43c1998cf0b767f6a5b9~mv2.png/v1/fill/w_1024,h_1024,al_c,usm_0.66_1.00_0.01/2e5bc5_5f3d634ff4eb43c1998cf0b767f6a5b9~mv2.png',
+                  vibrate: true,
+                  sound: true,
+                  priority: 'high'
+                }
+              }, {
+                time: parseInt(moment(items[j].time).format('x')),
+                repeat: 'year'
+              });
+            }
           }
         } catch (e) {
           this.setState({
