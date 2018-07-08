@@ -7,22 +7,22 @@ class Footer extends Component {
     return (
       <View style={styles.container}>
         {this.props.notToday && <View style={styles.notToday} />}
-        <Text>{this.props.count} count</Text>
+        {/*<Text>{this.props.count} count</Text>*/}
         <View style={styles.filters}>
           <TouchableOpacity
             style={[styles.filter, filter === 'ALL' && styles.selected]}
             onPress={() => this.props.onFilter('ALL')}>
-            <Text>All</Text>
+            <Text style={filter === 'ALL' && styles.textSelected}>Todos</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.filter, filter === 'ACTIVE' && styles.selected]}
             onPress={() => this.props.onFilter('ACTIVE')}>
-            <Text>Active</Text>
+            <Text style={filter === 'ACTIVE' && styles.textSelected}>Sin hacer</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.filter, filter === 'COMPLETED' && styles.selected]}
             onPress={() => this.props.onFilter('COMPLETED')}>
-            <Text>Complete</Text>
+            <Text style={filter === 'COMPLETED' && styles.textSelected}>Hechos</Text>
           </TouchableOpacity>
         </View>
         {1 === 3 && (
@@ -37,6 +37,8 @@ class Footer extends Component {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    paddingTop: 2,
+    paddingBottom: 2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -50,11 +52,22 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     flex: 1,
     justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  filter: {
+    padding: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 5
   },
   selected: {
-    padding: 2,
-    backgroundColor: '#f1e794d9',
-    borderRadius: 2,
+    backgroundColor: '#9ed666d9',
+    borderRadius: 2
+  },
+  textSelected: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 18
   },
   notToday: {
     flex: 1,

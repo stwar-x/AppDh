@@ -9,19 +9,46 @@ import {
 } from 'react-native';
 import moment from 'moment';
 
+const now = moment(`${moment().format('YYYY-MM-DD')} ${moment().format('HH:mm')}`);
+
 export default class row extends React.Component {
+  constructor(props) {
+    super(props);
+    this.speak = this.speak.bind(this);
+  }
+  speak() {
+    if (moment(this.props.time).diff(now) < 0) {
+      if (this.props.complete) {
+        Expo.Speech.speak('Esta ya paso muy bien!', { language: 'es-419' });
+      } else {
+        Expo.Speech.speak('Esta ya paso care chimba y no lo has hecho!', { language: 'es-419' });
+      }
+    } else {
+      Expo.Speech.speak(this.props.speach, { language: 'es-419' })
+    }
+  }
   render() {
     const { complete } = this.props;
+    const pastUncompleted = moment(this.props.time).diff(now) < 0 && !complete;
+    const past = moment(this.props.time).diff(now) < 0 && complete;
 
     const textComponent = (
       <TouchableOpacity
-        style={styles.textWrap}
-        onPress={() => Expo.Speech.speak(this.props.speach, { language: 'es-419' })}
-        onLongPress={() => Expo.Speech.speak(this.props.speach, { language: 'es-419' })}>
-        <Text style={[styles.text, complete && styles.complete]}>
+        style={[
+          styles.textWrap,
+          past && styles.past,
+          pastUncompleted && styles.pastUncompleted
+          ]}
+        onPress={this.speak}
+        onLongPress={this.speak}>
+        <Text style={[
+          moment(this.props.time).diff(now) > 0 && styles.text,
+          complete && styles.complete,
+          pastUncompleted && styles.pastUncompletedColor
+        ]}>
           {this.props.text}
         </Text>
-        <Text style={styles.time}>
+        <Text style={[styles.time, pastUncompleted && styles.pastUncompletedColor]}>
           {moment(this.props.time).format('hh:mm a')}
         </Text>
       </TouchableOpacity>
@@ -96,9 +123,30 @@ const styles = StyleSheet.create({
   complete: {
     textDecorationLine: 'line-through',
   },
+  past: {
+    backgroundColor: '#48823f6e',
+    borderRadius: 5,
+    padding: 5,
+    fontSize: 18
+  },
   text: {
     fontSize: 24,
     color: '#4d4d4d',
+  },
+  past: {
+    backgroundColor: '#48823f6e',
+    borderRadius: 5,
+    padding: 5,
+  },
+  pastUncompleted: {
+    backgroundColor: '#ca1a2fd4',
+    borderRadius: 5,
+    padding: 5
+  },
+  pastUncompletedColor: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 20
   },
   destroy: {
     fontSize: 20,

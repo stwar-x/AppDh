@@ -25,7 +25,8 @@ const now = moment(new Date()).startOf('day');
 const datos = [
   {
     key: 0,
-    date: moment('2018-07-07'),
+    date: moment('2018-07-08'),
+    label: 'Pre-Carrera',
     events: [
       {
         key: 1,
@@ -225,6 +226,7 @@ const datos = [
   {
     key: 1,
     date: moment('2018-12-20'),
+    label: 'Dia de la Carrera',
     events: [
       {
         key: 1,
@@ -412,7 +414,7 @@ export default class App extends React.Component {
     return (
       <Picker.Item
         key={option.key}
-        label={option.date.format('DD-MM-YYYY')}
+        label={option.label}
         value={option.key}
       />
     );
@@ -525,6 +527,7 @@ const styles = StyleSheet.create({
   picker: {
     height: 50,
     alignSelf: 'stretch',
+    color: '#fff'
   },
   notToday: {
     flex: 1,
