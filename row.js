@@ -16,6 +16,7 @@ export default class row extends React.Component {
     const textComponent = (
       <TouchableOpacity
         style={styles.textWrap}
+        onPress={() => Expo.Speech.speak(this.props.speach, { language: 'es-419' })}
         onLongPress={() => Expo.Speech.speak(this.props.speach, { language: 'es-419' })}>
         <Text style={[styles.text, complete && styles.complete]}>
           {this.props.text}

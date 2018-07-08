@@ -29,24 +29,196 @@ const datos = [
     events: [
       {
         key: 1,
-        text: '1 instalar las carpas',
+        text: '1 Si salio de la casa !!',
         complete: false,
-        time: moment('2018-07-07 07:00'),
-        speach: 'Oe Pirobo'
+        time: moment('2018-07-07 06:00'),
+        speach: 'Levantese imbecil'
       },
       {
         key: 2,
-        text: '2 instalar el sonido',
+        text: '2 Llego o esta en camino',
         complete: false,
-        time: moment('2018-07-07 07:30'),
+        time: moment('2018-07-07 06:30'),
         speach: 'Gonorrea ome gonorrea ome'
       },
       {
         key: 3,
-        text: '3 instalar las cintas',
+        text: '3 Llamada a lista',
+        complete: false,
+        time: moment('2018-07-07 07:00'),
+        speach: 'Donde esta agüevado?'
+      },
+      {
+        key: 4,
+        text: '4 Asignación de tareas',
+        complete: false,
+        time: moment('2018-07-07 07:10'),
+        speach: 'Ya sabe lo q tiene q hacer'
+      },
+      {
+        key: 5,
+        text: '5 Instalar carpas',
+        complete: false,
+        time: moment('2018-07-07 07:30'),
+        speach: 'No se demore'
+      },
+      {
+        key: 6,
+        text: '6 Instalar sonido',
+        complete: false,
+        time: moment('2018-07-07 07:50'),
+        speach: 'Pongalo a traquiar'
+      },
+      {
+        key: 7,
+        text: '7 Testiar sonido ',
+        complete: false,
+        time: moment('2018-07-07 08:00'),
+        speach: 'Si suena bien'
+      },
+      {
+        key: 8,
+        text: '8 Revisar cinta',
+        complete: false,
+        time: moment('2018-07-07 08:30'),
+        speach: 'Alguna novedad'
+      },
+      {
+        key: 9,
+        text: '9 Verificar sonido',
+        complete: false,
+        time: moment('2018-07-07 09:00'),
+        speach: 'Candela candela'
+      },
+      {
+        key: 10,
+        text: '10 Que le falta',
+        complete: false,
+        time: moment('2018-07-07 09:30'),
+        speach: 'Agilice agüevado'
+      },
+      {
+        key: 11,
+        text: '11 Ya esta listo',
+        complete: false,
+        time: moment('2018-07-07 09:45'),
+        speach: 'En la trampa'
+      },
+      {
+        key: 12,
+        text: '12 Listo pa la carrera',
+        complete: false,
+        time: moment('2018-07-07 09:50'),
+        speach: 'Enfoquese'
+      },{
+        key: 13,
+        text: '13 Se fue',
+        complete: false,
+        time: moment('2018-07-07 09:55'),
+        speach: 'Candela candela'
+      },{
+        key: 14,
+        text: '14 Primer lanzamiento Damas',
+        complete: false,
+        time: moment('2018-07-07 10:00'),
+        speach: 'Suelte suelte'
+      },{
+        key: 15,
+        text: '15 Primer lanzamiento Senior',
+        complete: false,
+        time: moment('2018-07-07 10:30'),
+        speach: 'Sueltele Sueltele'
+      },
+      {
+        key: 16,
+        text: '16 Primer lanzamiento Master',
+        complete: false,
+        time: moment('2018-07-07 11:00'),
+        speach: 'Sueltele sueltele'
+      },
+      {
+        key: 17,
+        text: '17 Primer lanzamiento Elite',
+        complete: false,
+        time: moment('2018-07-07 11:30'),
+        speach: 'Candela candela'
+      },
+      {
+        key: 18,
+        text: '18 Almorzar',
+        complete: false,
+        time: moment('2018-07-07 12:00'),
+        speach: 'Prendalo'
+      },
+      {
+        key: 19,
+        text: '19 Se dejo venir',
+        complete: false,
+        time: moment('2018-07-07 12:50'),
+        speach: 'Se dejo venir'
+      },
+      {
+        key: 20,
+        text: '20 Segundo lanzamiento Damas',
         complete: false,
         time: moment('2018-07-07 13:00'),
-        speach: 'Ya termino?'
+        speach: 'Sueltele sueltele'
+      },
+      {
+        key: 21,
+        text: '21 Segundo lanzamiento Senior',
+        complete: false,
+        time: moment('2018-07-07 13:30'),
+        speach: 'Sueltele sueltele'
+      },
+      {
+        key: 22,
+        text: '22 Segundo lanzamiento Master',
+        complete: false,
+        time: moment('2018-07-07 14:00'),
+        speach: 'Candela candela'
+      },
+      {
+        key: 23,
+        text: '23 Segundo lanzamiento Elite',
+        complete: false,
+        time: moment('2018-07-07 14:30'),
+        speach: 'Candela candela'
+      },
+      {
+        key: 24,
+        text: '24 Premiacion Base 1',
+        complete: false,
+        time: moment('2018-07-07 15:00'),
+        speach: 'Felicitaciones'
+      },
+      {
+        key: 25,
+        text: '25 Recoger Base 2 y Base 3',
+        complete: false,
+        time: moment('2018-07-07 15:00'),
+        speach: 'Recoja sus maricadas'
+      },
+      {
+        key: 26,
+        text: '26 Recoger todo Base 1',
+        complete: false,
+        time: moment('2018-07-07 16:00'),
+        speach: 'Recoja todo'
+      },
+      {
+        key: 27,
+        text: '27 Ya acabo?',
+        complete: false,
+        time: moment('2018-07-07 16:30'),
+        speach: 'Vamos vamos'
+      },
+      {
+        key: 28,
+        text: '28 Vamonos vamonos',
+        complete: false,
+        time: moment('2018-07-07 09:00'),
+        speach: 'Se acabo la fiesta Agüevado'
       },
     ],
   },
