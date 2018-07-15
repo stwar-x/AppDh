@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import moment from 'moment';
 
-
 const now = moment(`${moment().format('YYYY-MM-DD')} ${moment().format('HH:mm')}`);
 
 export default class row extends React.Component {
@@ -20,9 +19,9 @@ export default class row extends React.Component {
   speak() {
     if (moment(this.props.time).diff(now) < 0) {
       if (this.props.complete) {
-        Expo.Speech.speak('Esta ya paso muy bien!', { language: 'es-419' });
+        Expo.Speech.speak(this.props.speach + 'Esta ya paso muy bien!', { language: 'es-419' });
       } else {
-        Expo.Speech.speak('Esta ya paso care chimba y no lo has hecho!', { language: 'es-419' });
+        Expo.Speech.speak(this.props.speach + ' Esta ya paso care chimba y no lo has hecho!', { language: 'es-419' });
       }
     } else {
       Expo.Speech.speak(this.props.speach, { language: 'es-419' })
