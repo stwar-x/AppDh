@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import moment from 'moment';
 
+
 const now = moment(`${moment().format('YYYY-MM-DD')} ${moment().format('HH:mm')}`);
 
 export default class row extends React.Component {
