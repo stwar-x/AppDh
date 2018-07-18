@@ -19,9 +19,9 @@ export default class row extends React.Component {
   speak() {
     if (moment(this.props.time).diff(now) < 0) {
       if (this.props.complete) {
-        Expo.Speech.speak(this.props.speach + ' Excelente muy bien!', { language: 'es-419' });
+        Expo.Speech.speak(this.props.speach, { language: 'es-419' });
       } else {
-        Expo.Speech.speak(this.props.speach + ' Que paso que no lo ha hecho!', { language: 'es-419' });
+        Expo.Speech.speak(this.props.speach, { language: 'es-419' });
       }
     } else {
       Expo.Speech.speak(this.props.speach, { language: 'es-419' })
