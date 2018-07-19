@@ -26,200 +26,200 @@ const rigthNow = moment(`${moment().format('YYYY-MM-DD')} ${moment().format('HH:
 const datos = [
   {
     key: 0,
-    date: moment('2018-07-14'),
+    date: moment('2018-07-20'),
     label: 'Pre-Carrera',
     events: [
       {
         key: 1,
         text: '1 Si salio de la casa !!',
         complete: false,
-        time: moment('2018-07-14 06:00'),
+        time: moment('2018-07-20 06:00'),
         speach: 'Levantese imbecil'
       },
       {
         key: 2,
         text: '2 Llego o esta en camino',
         complete: false,
-        time: moment('2018-07-14 06:30'),
+        time: moment('2018-07-20 06:30'),
         speach: 'Gonorrea ome gonorrea ome'
       },
       {
         key: 3,
         text: '3 Llamada a lista',
         complete: false,
-        time: moment('2018-07-14 07:00'),
+        time: moment('2018-07-20 07:00'),
         speach: 'Donde esta agüevado?'
       },
       {
         key: 4,
         text: '4 Asignación de tareas',
         complete: false,
-        time: moment('2018-07-14 07:10'),
+        time: moment('2018-07-20 07:10'),
         speach: 'Ya sabe lo que tiene que hacer'
       },
       {
         key: 5,
         text: '5 Instalar carpas',
         complete: false,
-        time: moment('2018-07-14 07:30'),
+        time: moment('2018-07-20 07:30'),
         speach: 'No se demore'
       },
       {
         key: 6,
         text: '6 Instalar sonido',
         complete: false,
-        time: moment('2018-07-14 07:50'),
+        time: moment('2018-07-20 07:50'),
         speach: 'Pongalo a traquiar'
       },
       {
         key: 7,
         text: '7 Testiar sonido ',
         complete: false,
-        time: moment('2018-07-14 08:00'),
+        time: moment('2018-07-20 08:00'),
         speach: 'Si suena bien'
       },
       {
         key: 8,
         text: '8 Revisar cinta',
         complete: false,
-        time: moment('2018-07-14 08:30'),
+        time: moment('2018-07-20 08:30'),
         speach: 'Alguna novedad'
       },
       {
         key: 9,
         text: '9 Verificar sonido',
         complete: false,
-        time: moment('2018-07-14 09:00'),
+        time: moment('2018-07-20 09:00'),
         speach: 'Candela candela'
       },
       {
         key: 10,
         text: '10 Que le falta',
         complete: false,
-        time: moment('2018-07-14 09:30'),
+        time: moment('2018-07-20 09:30'),
         speach: 'Agilice agüevado'
       },
       {
         key: 11,
         text: '11 Ya esta listo',
         complete: false,
-        time: moment('2018-07-14 09:45'),
+        time: moment('2018-07-20 09:45'),
         speach: 'En la trampa'
       },
       {
         key: 12,
         text: '12 Listo pa la carrera',
         complete: false,
-        time: moment('2018-07-14 09:50'),
+        time: moment('2018-07-20 09:50'),
         speach: 'Enfóquese'
       },{
         key: 13,
         text: '13 Se fue',
         complete: false,
-        time: moment('2018-07-14 09:55'),
+        time: moment('2018-07-20 09:55'),
         speach: 'Candela candela'
       },{
         key: 14,
         text: '14 Primer lanzamiento Damas',
         complete: false,
-        time: moment('2018-07-14 10:00'),
+        time: moment('2018-07-20 10:00'),
         speach: 'Sueltele sueltele'
       },{
         key: 15,
         text: '15 Primer lanzamiento Senior',
         complete: false,
-        time: moment('2018-07-14 10:30'),
+        time: moment('2018-07-20 10:30'),
         speach: 'Sueltele Sueltele'
       },
       {
         key: 16,
         text: '16 Primer lanzamiento Master',
         complete: false,
-        time: moment('2018-07-14 11:00'),
+        time: moment('2018-07-20 11:00'),
         speach: 'Sueltele sueltele'
       },
       {
         key: 17,
         text: '17 Primer lanzamiento Elite',
         complete: false,
-        time: moment('2018-07-14 11:30'),
+        time: moment('2018-07-20 11:30'),
         speach: 'Candela candela'
       },
       {
         key: 18,
         text: '18 Almorzar',
         complete: false,
-        time: moment('2018-07-14 12:00'),
+        time: moment('2018-07-20 12:00'),
         speach: 'Prendalo'
       },
       {
         key: 19,
         text: '19 Se dejo venir',
         complete: false,
-        time: moment('2018-07-14 12:50'),
+        time: moment('2018-07-20 12:50'),
         speach: 'Se dejo venir'
       },
       {
         key: 20,
         text: '20 Segundo lanzamiento Damas',
         complete: false,
-        time: moment('2018-07-14 13:00'),
+        time: moment('2018-07-20 13:00'),
         speach: 'Sueltele sueltele'
       },
       {
         key: 21,
         text: '21 Segundo lanzamiento Senior',
         complete: false,
-        time: moment('2018-07-14 13:30'),
+        time: moment('2018-07-20 13:30'),
         speach: 'Sueltele sueltele'
       },
       {
         key: 22,
         text: '22 Segundo lanzamiento Master',
         complete: false,
-        time: moment('2018-07-14 14:00'),
+        time: moment('2018-07-20 14:00'),
         speach: 'Candela candela'
       },
       {
         key: 23,
         text: '23 Segundo lanzamiento Elite',
         complete: false,
-        time: moment('2018-07-14 14:30'),
+        time: moment('2018-07-20 14:30'),
         speach: 'Candela candela'
       },
       {
         key: 24,
         text: '24 Premiacion Base 1',
         complete: false,
-        time: moment('2018-07-14 15:00'),
+        time: moment('2018-07-20 15:00'),
         speach: 'Felicitaciones'
       },
       {
         key: 25,
         text: '25 Recoger Base 2 y Base 3',
         complete: false,
-        time: moment('2018-07-14 15:00'),
+        time: moment('2018-07-20 15:00'),
         speach: 'Recoja sus maricadas'
       },
       {
         key: 26,
         text: '26 Recoger todo Base 1',
         complete: false,
-        time: moment('2018-07-14 16:00'),
+        time: moment('2018-07-20 16:00'),
         speach: 'Recoja todo'
       },
       {
         key: 27,
         text: '27 Ya acabo?',
         complete: false,
-        time: moment('2018-07-14 16:30'),
+        time: moment('2018-07-20 16:30'),
         speach: 'Vamos vamos'
       },
       {
         key: 28,
         text: '28 Vamonos vamonos',
         complete: false,
-        time: moment('2018-07-14 17:00'),
+        time: moment('2018-07-20 17:00'),
         speach: 'Se acabo la fiesta Agüevado'
       },
     ],
@@ -227,7 +227,7 @@ const datos = [
   {
     key: 1,
     date: moment('2018-07-21'),
-    label: 'Dia de la Carrera',
+    label: 'Dia de la Carrera - 21 de Julio',
     events: [
       {
         key: 1,
@@ -610,8 +610,15 @@ export default class App extends React.Component {
     }
   }
   render() {
-    const notToday =
-      now.diff(datos[this.state.day].date.startOf('day'), 'days') !== 0;
+    let notToday = true;
+    if (this.state.day === 0) {
+      if (now.format('DD-MM-YYYY') === '18-07-2018' || now.format('DD-MM-YYYY') === '19-07-2018' || now.format('DD-MM-YYYY') === '20-07-2018') {
+        notToday = false;
+      }
+    } else {
+      notToday =
+        now.diff(datos[this.state.day].date.startOf('day'), 'days') !== 0;
+    }
     return (
       <View style={styles.container}>
         {1 === 3 && (
